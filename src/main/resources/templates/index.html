@@ -10,22 +10,13 @@
 			th{ padding:5px; color:white; background-color:darkgray; }
 			td{ padding:5px; color:black; background-color:#f0f0f0; }
 		</style>
+		<style th:include="part :: frag_style"></style>
 	</head>
 	<body>
 		<h1 th:text="#{content.title}">Hello page</h1>
-		<table th:inline="text">
-			<tr>
-				<th>ID</th>
-				<th>NAME</th>
-				<th>MAIL</th>
-			</tr>
-			<tr th:each="obj : ${data}">
-				<td>[[${obj.id}]]</td>
-				<td>[[${obj.name}]]</td>
-				<td>[[${obj.value}]]</td>
-			</tr>
-		</table>
-
+		<div th:include="part :: frag_body">
+			<p>this is original content.</p>
+		</div>
 	</body>
 </html>
 
