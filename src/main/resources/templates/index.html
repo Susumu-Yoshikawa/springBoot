@@ -13,7 +13,7 @@
 	</head>
 	<body>
 		<h1 th:text="#{content.title}">Hello page</h1>
-		<p th:utext="${msg}">message.</p>
+		<p th:text="${id} + ' is ' + (${check} ? ${trueVal} : ${falseVal})"></p>
 
 	</body>
 </html>
