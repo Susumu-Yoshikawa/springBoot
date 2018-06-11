@@ -9,7 +9,9 @@
 		</style>
 	</head>
 	<body>
-		<h1>Hello Page</h1>
+		<h1 th:text="#{content.title}">Hello page</h1>
+		<p th:text="#{content.message}"></p>
+		<p th:text="'from parameter... id='+${param.id[0] + ',name='+param.name[0]}"></p>
 		<p th:text="${new java.util.Date().toString()}"></p>
 		<p th:text="${#dates.format(new java.util.Date(), 'dd/MMM/yyyy HH:mm')}"></p>
 		<p th:text="${#numbers.formatInteger(1234,7)}"></p>
