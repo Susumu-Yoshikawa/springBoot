@@ -12,11 +12,10 @@ public class HelloController {
 	@RequestMapping(value="/")
 	public ModelAndView index(ModelAndView mav){
 		mav.setViewName("index");
-		ArrayList<String[]> data = new ArrayList<String[]>();
-		data.add(new String[] {"taro","taro@mail.com","090-9999-9999"});
-		data.add(new String[] {"hanako","hanako@mail.com","190-9999-9999"});
-		data.add(new String[] {"sachiko","sachi@mail.com","290-9999-9999"});
-		System.out.println(data);
+		ArrayList<DataObject> data = new ArrayList<DataObject>();
+		data.add(new DataObject(0, "taro", "taro@yamada"));
+		data.add(new DataObject(1, "hanako", "hanako@yamada"));
+		data.add(new DataObject(2, "sachiko", "sachi@yamada"));
 		mav.addObject("data",data);
 		return mav;
 	}
