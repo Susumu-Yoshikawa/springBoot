@@ -10,6 +10,10 @@
 	</head>
 	<body>
 		<h1>Hello Page</h1>
+		<p th:text="${new java.util.Date().toString()}"></p>
+		<p th:text="${#dates.format(new java.util.Date(), 'dd/MMM/yyyy HH:mm')}"></p>
+		<p th:text="${#numbers.formatInteger(1234,7)}"></p>
+		<p th:text="${#strings.toUpperCase('Welcom to Spring')}"></p>
 		<pre th:text="${msg}">please wait...</pre>
 		<form method="post" action="/">
 			<div>
