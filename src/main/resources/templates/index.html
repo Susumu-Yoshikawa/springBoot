@@ -10,7 +10,9 @@
 	</head>
 	<body>
 		<h1 th:text="#{content.title}">Hello page</h1>
+		<p><a th:href="@{/home/(id=${param.id[0]})}">link</a></p>
 		<p th:text="#{content.message}"></p>
+		<!--
 		<p th:text="'from parameter... id='+${param.id[0] + ',name='+param.name[0]}"></p>
 		<p th:text="${new java.util.Date().toString()}"></p>
 		<p th:text="${#dates.format(new java.util.Date(), 'dd/MMM/yyyy HH:mm')}"></p>
@@ -44,6 +46,7 @@
 			</div>
 			<input type="submit" value="click" />
 		</form>
+		-->
 	</body>
 </html>
 
