@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,7 @@ public class HelloController {
 			ModelAndView mav){
 		mav.setViewName("index");
 		mav.addObject("msg","this is sample content.");
+		mav.addObject("formModel", mydata);
 		Iterable<MyData> list = repository.findAll();
 		mav.addObject("datalist",list);
 		return mav;
@@ -37,10 +40,24 @@ public class HelloController {
 	@RequestMapping(value="/", method = RequestMethod.POST)
 	@Transactional(readOnly=false)
 	public ModelAndView form(
-			@ModelAttribute("formModel") MyData mydata,
+			@ModelAttribute("formModel")
+			@Validated MyData mydata,
+			BindingResult result,
 			ModelAndView mav){
-		repository.saveAndFlush(mydata);
-		return new ModelAndView("redirect:/");
+
+		ModelAndView res = null;
+		if(!result.hasErrors()) {
+			repository.saveAndFlush(mydata);
+			res = new ModelAndView("redirect:/");
+		} else {
+			mav.setViewName("index");
+			mav.addObject("msg","sorry, error is occured...");
+			Iterable<MyData> list = repository.findAll();
+			mav.addObject("datalist",list);
+			res = mav;
+		}
+
+		return res;
 	}
 
 	@RequestMapping(value="/edit/{id}", method=RequestMethod.GET)
@@ -94,14 +111,14 @@ public class HelloController {
 
 		MyData d2 = new MyData();
 		d2.setName("test2");
-		d2.setAge(223);
+		d2.setAge(200);
 		d2.setMail("mail@test2");
 		d2.setMemo("this is my test2!");
 		repository.saveAndFlush(d2);
 
 		MyData d3 = new MyData();
 		d3.setName("test3");
-		d3.setAge(323);
+		d3.setAge(199);
 		d3.setMail("mail@test3");
 		d3.setMemo("this is my test3!");
 		repository.saveAndFlush(d3);
