@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<style>
+			h1{ font-size:18pt; font-weight:bold; color:gray; }
+			body{ font-size:13pt; color:gray; margin:5px 25px; }
+			td{ padding:5px; color:black; background-color:#f0f0f0; }
+		</style>
+	</head>
+	<body>
+		<h1 th:text="${title}">Edit page</h1>
+		<h1 th:text="#{content.title}">Hello page</h1>
+		<form method="post" action="/delete" th:object="${formModel}">
+			<input type="hidden" name="id" th:value="*{id}" />
+			<table>
+				<tr>
+					<td><p th:text="|名前　*{name}|"></p></td>
+				</tr>
+				<tr>
+					<td><p th:text="|年齢　*{age}|"></p></td>
+				</tr>
+				<tr>
+					<td><p th:text="*{mail}"></p></td>
+				</tr>
+				<tr>
+					<td><p th:text="*{memo}"></p></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="delete" /></td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</html>
