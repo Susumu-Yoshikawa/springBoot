@@ -6,6 +6,7 @@
 		<style>
 			h1{ font-size:18pt; font-weight:bold; color:gray; }
 			body{ font-size:13pt; color:gray; margin:5px 25px; }
+			pre{ border : solid 3px #ddd; padding:10px; }
 			tr{ margin:5px; }
 			th{ padding:5px; color:white; background-color:darkgray; }
 			td{ padding:5px; color:black; background-color:#f0f0f0; }
@@ -14,9 +15,7 @@
 	</head>
 	<body>
 		<h1 th:text="#{content.title}">Hello page</h1>
-		<div th:include="part :: frag_body">
-			<p>this is original content.</p>
-		</div>
+		<pre th:text="${data}"></pre>
 	</body>
 </html>
 
