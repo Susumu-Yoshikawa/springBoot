@@ -44,8 +44,17 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 	@Override
 	public List<MyData> find(String fstr) {
 		List<MyData> list = null;
-		String qstr = "from MyData where id = :fstr";
-		Query query = entityManager.createQuery(qstr).setParameter("fstr", Long.parseLong(fstr));
+		String qstr = "from MyData where id = :fid or name like :fname or mail like :fmail";
+		Long fid = 0L;
+		try {
+			fid = Long.parseLong(fstr);
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		Query query = entityManager.createQuery(qstr)
+				.setParameter("fid", fid)
+				.setParameter("fname", "%" + fstr + "%")
+				.setParameter("fmail", fstr + "@%");
 		list = query.getResultList();
 		return list;
 	}
