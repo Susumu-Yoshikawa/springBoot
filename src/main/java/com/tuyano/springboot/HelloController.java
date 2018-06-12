@@ -106,21 +106,21 @@ public class HelloController {
 		d1.setName("test1");
 		d1.setAge(123);
 		d1.setMail("mail@test1");
-		d1.setMemo("this is my test1!");
+		d1.setMemo("090-9999-9999");
 		repository.saveAndFlush(d1);
 
 		MyData d2 = new MyData();
 		d2.setName("test2");
 		d2.setAge(200);
 		d2.setMail("mail@test2");
-		d2.setMemo("this is my test2!");
+		d2.setMemo("080-9999-9999");
 		repository.saveAndFlush(d2);
 
 		MyData d3 = new MyData();
 		d3.setName("test3");
 		d3.setAge(199);
 		d3.setMail("mail@test3");
-		d3.setMemo("this is my test3!");
+		d3.setMemo("070-9999-9999");
 		repository.saveAndFlush(d3);
 	}
 
