@@ -1,8 +1,14 @@
 package com.tuyano.springboot;
 
+
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tuyano.springboot.repositories.MyDataRepository;
@@ -13,13 +19,48 @@ public class HelloController {
 	@Autowired
 	MyDataRepository repository;
 
-	@RequestMapping(value="/")
-	public ModelAndView index(ModelAndView mav){
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public ModelAndView index(
+			@ModelAttribute("formModel") MyData mydata,
+			ModelAndView mav){
 		mav.setViewName("index");
 		mav.addObject("msg","this is sample content.");
 		Iterable<MyData> list = repository.findAll();
-		mav.addObject("data",list);
+		mav.addObject("datalist",list);
 		return mav;
+	}
+
+	@RequestMapping(value="/", method = RequestMethod.POST)
+	@Transactional(readOnly=false)
+	public ModelAndView form(
+			@ModelAttribute("formModel") MyData mydata,
+			ModelAndView mav){
+		repository.saveAndFlush(mydata);
+		return new ModelAndView("redirect:/");
+	}
+
+	@PostConstruct
+	public void init() {
+		MyData d1 = new MyData();
+		d1.setName("test1");
+		d1.setAge(123);
+		d1.setMail("mail@test1");
+		d1.setMemo("this is my test1!");
+		repository.saveAndFlush(d1);
+
+		MyData d2 = new MyData();
+		d2.setName("test2");
+		d2.setAge(223);
+		d2.setMail("mail@test2");
+		d2.setMemo("this is my test2!");
+		repository.saveAndFlush(d2);
+
+		MyData d3 = new MyData();
+		d3.setName("test3");
+		d3.setAge(323);
+		d3.setMail("mail@test3");
+		d3.setMemo("this is my test3!");
+		repository.saveAndFlush(d3);
 	}
 
 }
