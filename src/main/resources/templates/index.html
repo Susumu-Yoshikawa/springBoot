@@ -12,10 +12,25 @@
 			td{ padding:5px; color:black; background-color:#f0f0f0; }
 			.err{ color:red; }
 		</style>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+		<script th:inline="javascript">
+			$(document).ready(function(){
+				var num = /*[[${param.id[0]}]]*/;
+				$.get("/rest/" + num, null, callback)
+			});
+			function callback(result){
+				$('#obj').append('<li>id: ' + result.id + '</li>');
+				$('#obj').append('<li>name: ' + result.name + '</li>');
+				$('#obj').append('<li>mail: ' + result.mail + '</li>');
+				$('#obj').append('<li>age: ' + result.age + '</li>');
+				$('#obj').append('<li>memo: ' + result.memo + '</li>');
+			};
+		</script>
 	</head>
 	<body>
 		<h1 th:text="#{content.title}">Hello page</h1>
 		<p th:text="${msg}"></p>
+		<ol id = "obj"></ol>
 		<table>
 			<tr>
 				<th>ID</th>

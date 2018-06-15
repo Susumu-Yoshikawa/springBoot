@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class MsgDataController {
 	@Autowired
 	MsgDataRepository repository;
 
-	//@PersistenceContext
+	@PersistenceContext
 	EntityManager entityManager;
 
 	MsgDataDaoImpl dao;
