@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +27,8 @@ public class HelloController {
 	@Autowired
 	MyDataRepository repository;
 
-	@PersistenceContext
-	EntityManager entityManager;
-
-	MyDataDaoImpl dao;
+	@Autowired
+	private MyDataService service;
 
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(
@@ -41,7 +37,7 @@ public class HelloController {
 		mav.setViewName("index");
 		mav.addObject("title","Find Page");
 		mav.addObject("msg","MyDataのサンプルです。");
-		Iterable<MyData> list = dao.getAll();
+		Iterable<MyData> list = service.getAll();
 		mav.addObject("datalist",list);
 		return mav;
 	}
@@ -114,7 +110,7 @@ public class HelloController {
 		mav.setViewName("find");
 		mav.addObject("title","Find Page");
 		mav.addObject("value","");
-		Iterable<MyData> list = dao.getAll();
+		Iterable<MyData> list = service.getAll();
 		mav.addObject("datalist",list);
 		return mav;
 	}
@@ -132,7 +128,7 @@ public class HelloController {
 			mav.addObject("title","Find result");
 			mav.addObject("msg","「" + param + "」の検索結果");
 			mav.addObject("value","param");
-			List<MyData> list = dao.find(param);
+			List<MyData> list = service.find(param);
 			mav.addObject("datalist",list);
 		}
 		return mav;
@@ -141,9 +137,6 @@ public class HelloController {
 
 	@PostConstruct
 	public void init() {
-
-		dao = new MyDataDaoImpl(entityManager);
-
 		MyData d1 = new MyData();
 		d1.setName("test1");
 		d1.setAge(11);
