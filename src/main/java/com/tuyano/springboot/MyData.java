@@ -22,7 +22,7 @@ public class MyData {
 
 	@OneToMany(cascade=CascadeType.ALL)
 	@Column(nullable=true)
-	private List<MsgData> msgdatas;
+	public List<MsgData> msgdatas;
 
 	public List<MsgData> getMsgdatas() {
 		return msgdatas;

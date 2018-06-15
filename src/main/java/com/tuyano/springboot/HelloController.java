@@ -8,6 +8,8 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -30,6 +32,24 @@ public class HelloController {
 	@Autowired
 	private MyDataService service;
 
+	@Autowired
+	MyDataBean myDataBean;
+
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public ModelAndView indexById(
+			@PathVariable long id,
+			ModelAndView mav) {
+		mav.setViewName("pickup");
+		mav.addObject("title","Pickup Page");
+		String table = "<table>"
+				+ myDataBean.getTableTagById(id)
+				+ "</table>";
+		mav.addObject("msg","pickup data id = " + id);
+		mav.addObject("data",table);
+		return mav;
+
+	}
+
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(
 			@ModelAttribute("formModel") MyData mydata,
@@ -38,6 +58,18 @@ public class HelloController {
 		mav.addObject("title","Find Page");
 		mav.addObject("msg","MyDataのサンプルです。");
 		Iterable<MyData> list = service.getAll();
+		mav.addObject("datalist",list);
+		return mav;
+	}
+
+	@RequestMapping(value="/page", method = RequestMethod.GET)
+	public ModelAndView index(
+			ModelAndView mav,
+			Pageable pageable){
+		mav.setViewName("index");
+		mav.addObject("title","Find Page");
+		mav.addObject("msg","MyDataのサンプルです。");
+		Page<MyData> list = repository.findAll(pageable);
 		mav.addObject("datalist",list);
 		return mav;
 	}
