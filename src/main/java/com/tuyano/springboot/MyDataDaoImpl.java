@@ -24,12 +24,19 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 
 	@Override
 	public List<MyData> getAll() {
+		int offset = 1; // 取り出す位置の指定
+		int limit = 2; // 取り出す個数の指定
+
 		List<MyData> list = null;
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
 		Root<MyData> root = query.from(MyData.class);
 		query.select(root).orderBy(builder.desc(root.get("name")));
-		list = (List<MyData>)entityManager.createQuery(query).getResultList();
+		list = (List<MyData>)entityManager
+				.createQuery(query)
+				.setFirstResult(offset)
+				.setMaxResults(limit)
+				.getResultList();
 		return list;
 	}
 
