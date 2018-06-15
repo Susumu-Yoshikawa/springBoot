@@ -13,4 +13,6 @@ public interface MyDataDao <T> extends Serializable{
 
 	public List<T> find(String fstr);
 
+	public List<MyData> findByAge(int min, int max);
+
 }

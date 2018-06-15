@@ -15,12 +15,16 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 
-@NamedQueries(
+@NamedQueries({
 	@NamedQuery(
 		name="findWithName",
 		query="from MyData where name like :fname"
+	),
+	@NamedQuery(
+		name="findByAge",
+		query="from MyData where age > :min and age < :max"
 	)
-)
+})
 
 @Entity
 @Table(name="mydata")

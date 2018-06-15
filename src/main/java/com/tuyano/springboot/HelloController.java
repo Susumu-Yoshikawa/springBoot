@@ -39,9 +39,9 @@ public class HelloController {
 			@ModelAttribute("formModel") MyData mydata,
 			ModelAndView mav){
 		mav.setViewName("index");
-		mav.addObject("msg","this is sample content.");
-		mav.addObject("formModel", mydata);
-		Iterable<MyData> list = dao.getAll();
+		mav.addObject("title","Find Page");
+		mav.addObject("msg","MyDataのサンプルです。");
+		Iterable<MyData> list = dao.findByAge(10, 20);
 		mav.addObject("datalist",list);
 		return mav;
 	}
@@ -146,21 +146,21 @@ public class HelloController {
 
 		MyData d1 = new MyData();
 		d1.setName("test1");
-		d1.setAge(123);
+		d1.setAge(11);
 		d1.setMail("mail@test1");
 		d1.setMemo("090-9999-9999");
 		repository.saveAndFlush(d1);
 
 		MyData d2 = new MyData();
 		d2.setName("test2");
-		d2.setAge(200);
+		d2.setAge(20);
 		d2.setMail("mail@test2");
 		d2.setMemo("080-9999-9999");
 		repository.saveAndFlush(d2);
 
 		MyData d3 = new MyData();
 		d3.setName("test3");
-		d3.setAge(199);
+		d3.setAge(10);
 		d3.setMail("mail@test3");
 		d3.setMemo("070-9999-9999");
 		repository.saveAndFlush(d3);
