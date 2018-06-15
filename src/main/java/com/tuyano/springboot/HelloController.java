@@ -41,7 +41,7 @@ public class HelloController {
 		mav.setViewName("index");
 		mav.addObject("title","Find Page");
 		mav.addObject("msg","MyDataのサンプルです。");
-		Iterable<MyData> list = dao.findByAge(10, 20);
+		Iterable<MyData> list = dao.getAll();
 		mav.addObject("datalist",list);
 		return mav;
 	}

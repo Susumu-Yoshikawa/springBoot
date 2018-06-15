@@ -3,7 +3,9 @@ package com.tuyano.springboot;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class MyDataDaoImpl implements MyDataDao<MyData> {
 
@@ -22,10 +24,12 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 
 	@Override
 	public List<MyData> getAll() {
-		Query query = entityManager.createQuery("from MyData");
-		@SuppressWarnings("unchecked")
-		List<MyData> list = query.getResultList();
-		entityManager.close();
+		List<MyData> list = null;
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
+		Root<MyData> root = query.from(MyData.class);
+		query.select(root).orderBy(builder.desc(root.get("name")));
+		list = (List<MyData>)entityManager.createQuery(query).getResultList();
 		return list;
 	}
 
@@ -40,18 +44,14 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 		return (List<MyData>)entityManager.createQuery("from MyData where name = " + name).getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<MyData> find(String fstr) {
 		List<MyData> list = null;
-		Long fid = 0L;
-		try {
-			fid = Long.parseLong(fstr);
-		}catch(NumberFormatException e) {
-			//e.printStackTrace();
-		}
-		Query query = entityManager.createNamedQuery("findWithName").setParameter("fname", "%" + fstr + "%");
-		list = query.getResultList();
+		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
+		Root<MyData> root = query.from(MyData.class);
+		query.select(root).where(builder.equal(root.get("name"), fstr));
+		list = (List<MyData>)entityManager.createQuery(query).getResultList();
 		return list;
 	}
 
@@ -64,6 +64,5 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 				.setParameter("max", max)
 				.getResultList();
 	}
-
 
 }
