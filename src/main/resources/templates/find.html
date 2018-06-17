@@ -19,7 +19,7 @@
 			<table>
 				<tr>
 					<td>FIND:</td>
-					<td><input type="text" name="fstr" size="20" th:value="${value}"/></td>
+					<td><input type="text" name="find" size="20" th:value="${value}"/></td>
 				</tr>
 				<tr>
 					<td></td><td><input type="submit" /></td>
@@ -30,18 +30,14 @@
 		<hr />
 		<table>
 			<tr>
-				<th>ID</th>
 				<th>名前</th>
-				<th>メール</th>
-				<th>年齢</th>
 				<th>メモ</th>
+				<th>日時</th>
 			</tr>
 			<tr th:each="obj : ${datalist}">
-				<td th:text="${obj.id}"></td>
 				<td th:text="${obj.name}"></td>
-				<td th:text="${obj.mail}"></td>
-				<td th:text="${obj.age}"></td>
 				<td th:text="${obj.memo}"></td>
+				<td th:text="${obj.date}"></td>
 			</tr>
 		</table>
 
